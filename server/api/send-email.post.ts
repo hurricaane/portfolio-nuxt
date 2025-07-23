@@ -1,12 +1,24 @@
+import { Resend } from "resend";
+
 export default defineEventHandler(async (event) => {
-  const { to, subject, name, email, message } = await readBody(event)
+  const runtimeConfig = useRuntimeConfig();
+  const { to, subject, name, email, message } = await readBody(event);
+
+  // Validate required environment variables
+  if (!runtimeConfig.resendApiKey) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Resend API key not configured",
+    });
+  }
+
+  const resend = new Resend(runtimeConfig.resendApiKey);
 
   try {
-    // Utiliser le composable useNodeMailer
-    const { sendMail } = useNodeMailer()
-
-    await sendMail({
-      to: to,
+    const { data, error } = await resend.emails.send({
+      from:
+        runtimeConfig.resendFromEmail || "Portfolio <onboarding@resend.dev>",
+      to: [to],
       subject: subject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -16,7 +28,7 @@ export default defineEventHandler(async (event) => {
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Message:</strong></p>
             <div style="background-color: white; padding: 15px; border-radius: 4px; margin-top: 10px;">
-              ${message.replace(/\n/g, '<br>')}
+              ${message.replace(/\n/g, "<br>")}
             </div>
           </div>
           <p style="color: #6b7280; font-size: 14px;">
@@ -24,15 +36,24 @@ export default defineEventHandler(async (event) => {
           </p>
         </div>
       `,
-      replyTo: email
-    })
+      replyTo: email,
+    });
 
-    return { success: true, message: 'Email sent properly' }
+    if (error) {
+      console.error("Resend API error:", error);
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Failed to send email via Resend",
+      });
+    }
+
+    console.log("Email sent successfully:", data?.id);
+    return { success: true, message: "Email sent properly", emailId: data?.id };
   } catch (error) {
-    console.error('Email sending error: ', error)
+    console.error("Email sending error:", error);
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to send email'
-    })
+      statusMessage: "Failed to send email",
+    });
   }
-})
+});
