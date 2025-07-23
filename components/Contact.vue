@@ -77,7 +77,7 @@
                 </div>
                 <div>
                   <p class="text-orange-600 dark:text-gray-400">Email</p>
-                  <p class="text-orange-900 dark:text-white">{{ runtimeConfig.public.emailUser }}</p>
+                  <p class="text-orange-900 dark:text-white">{{ runtimeConfig.public.contactEmail }}</p>
                 </div>
               </div>
 
@@ -367,7 +367,7 @@ const handleSubmit = async () => {
     await $fetch('/api/send-email', {
       method: 'POST',
       body: {
-        to: runtimeConfig.public.emailUser,
+        to: runtimeConfig.public.contactEmail,
         subject: `New message from ${formData.value.name}`,
         name: formData.value.name,
         email: formData.value.email,

@@ -30,12 +30,12 @@ This is a **Nuxt 3** portfolio website with TypeScript, TailwindCSS v4, and Shad
 - **Component-based architecture**: Section components (Hero, About, Skills, Projects, Contact) imported into the main page
 - **Shadcn-vue UI system**: Components in `components/ui/` with configuration in `components.json`
 - **Composables**: `composables/` contains reusable logic (useDarkMode, useLoading, useToast)
-- **Email functionality**: Uses nuxt-nodemailer with Gmail SMTP for contact form
+- **Email functionality**: Uses Resend API for professional email delivery
 
 ### Critical Configuration Files
 - `nuxt.config.ts`: Main configuration with email setup, ngrok tunnel, and dark mode script injection
 - `components.json`: Shadcn-vue configuration with aliases and styling
-- `.env`: Required environment variables (EMAIL_USER, EMAIL_PASSWORD)
+- `.env`: Required environment variables (RESEND_API_KEY, RESEND_FROM_EMAIL)
 
 ### Dark Mode Implementation
 - Custom dark mode with system preference detection
@@ -44,9 +44,10 @@ This is a **Nuxt 3** portfolio website with TypeScript, TailwindCSS v4, and Shad
 - Applied via Tailwind's `dark:` classes
 
 ### Email System
-- Contact form sends emails via Gmail SMTP
-- Requires EMAIL_USER and EMAIL_PASSWORD environment variables
-- Server API endpoint handles form submissions
+- Contact form sends emails via Resend API
+- Requires RESEND_API_KEY and RESEND_FROM_EMAIL environment variables
+- Server API endpoint handles form submissions at /api/send-email
+- Professional email service with better deliverability than SMTP
 
 ### Development Notes
 - Uses ngrok for external access during development (configured domain)
