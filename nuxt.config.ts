@@ -2,17 +2,13 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
+  compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
   vite: {
-    plugins: [
-      tailwindcss()
-    ],
+    plugins: [tailwindcss()],
     server: {
-      allowedHosts: [
-        "glorious-boxer-honestly.ngrok-free.app"
-      ]
+      allowedHosts: ["glorious-boxer-honestly.ngrok-free.app"],
     },
   },
   app: {
@@ -70,53 +66,39 @@ export default defineNuxtConfig({
               }
             })();
           `,
-          type: 'text/javascript'
-        }
+          type: "text/javascript",
+        },
       ],
       // Meta tags pour éviter le flash
       meta: [
         {
-          name: 'color-scheme',
-          content: 'dark light'
-        }
-      ]
-    }
+          name: "color-scheme",
+          content: "dark light",
+        },
+      ],
+    },
   },
   runtimeConfig: {
-    // Private keys
-    emailUser: process.env.EMAIL_USER,
-    emailPassword: process.env.EMAIL_PASSWORD,
+    resendApiKey: process.env.RESEND_API_KEY,
+    resendFromEmail: process.env.RESEND_FROM_EMAIL,
     public: {
-      emailUser: process.env.EMAIL_USER,
-    }
+      contactEmail: process.env.RESEND_FROM_EMAIL,
+    },
   },
-  modules: ['shadcn-nuxt', '@nuxtjs/ngrok', '@nuxt/icon', 'nuxt-nodemailer'],
+  modules: ["shadcn-nuxt", "@nuxtjs/ngrok", "@nuxt/icon"],
   shadcn: {
     /**
      * Prefix for all the imported component
      */
-    prefix: '',
+    prefix: "",
     /**
      * Directory that the component lives in.
      * @default "./components/ui"
      */
-    componentDir: './components/ui'
+    componentDir: "./components/ui",
   },
   ngrok: {
     authtoken_from_env: true,
-    domain: 'glorious-boxer-honestly.ngrok-free.app'
+    domain: "glorious-boxer-honestly.ngrok-free.app",
   },
-  nodemailer: {
-    from: process.env.EMAIL_USER,
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD
-    },
-    tls: {
-      rejectUnauthorized: false
-    }
-  },
-})
+});
