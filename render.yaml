@@ -1,0 +1,16 @@
+# Blueprint to create web service on render
+services:
+  - name: portfolio-nuxt
+    type: web
+    plan: free
+    runtime: image
+    previews:
+      generation: automatic
+      plan: free
+    region: frankfurt
+    domains:
+      - dossouyannick.com
+    image:
+      url: ghcr.io/hurricaane/portfolio-nuxt:latest
+    envVars:
+      - fromGroup: portfolio-nuxt-env
