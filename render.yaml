@@ -6,7 +6,6 @@ services:
     runtime: image
     previews:
       generation: automatic
-      plan: free
     region: frankfurt
     domains:
       - dossouyannick.com
