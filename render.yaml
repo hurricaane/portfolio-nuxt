@@ -10,6 +10,6 @@ services:
     domains:
       - dossouyannick.com
     image:
-      url: ghcr.io/hurricaane/portfolio-nuxt:latest
+      url: ghcr.io/hurricaane/portfolio-nuxt:main
     envVars:
       - fromGroup: portfolio-nuxt-env
