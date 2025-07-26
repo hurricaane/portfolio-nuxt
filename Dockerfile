@@ -18,6 +18,9 @@ WORKDIR /app
 
 COPY --from=build /app/.output ./
 
+ARG RESEND_API_KEY
+ARG RESEND_FROM_EMAIL
+
 ENV PORT=3000 \
   NODE_ENV=production \
   HOST=0.0.0.0
